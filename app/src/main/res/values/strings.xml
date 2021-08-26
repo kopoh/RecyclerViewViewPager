@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">RecyclerViewViewPager</string>
+    <string name="title">группа</string>
+    <string name="description">описание</string>
+    <string name="subject">предмет</string>
+    <string name="name">имя</string>
+    <string name="time">время</string>
+</resources>
