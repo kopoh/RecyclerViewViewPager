@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.recyclerviewviewpager.R
-import com.android.recyclerviewviewpager.Table
+import com.android.recyclerviewviewpager.data.Table
 
 class ListAdapter(private val list: List<Table>)
     : RecyclerView.Adapter<MovieViewHolder>() {
