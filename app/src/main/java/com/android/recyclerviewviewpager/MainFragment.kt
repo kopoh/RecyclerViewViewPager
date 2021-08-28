@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.recyclerviewviewpager.data.Table
 import com.android.recyclerviewviewpager.databinding.FragmentMainBinding
 import info.android.viewpager2app.ListAdapter
-
-data class Table(val time: String, val group: String, val auditory: Int, val name: String, val subject: String)
 
 class MainFragment : Fragment() {
 
