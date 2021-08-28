@@ -12,7 +12,6 @@ import info.android.viewpager2app.ListAdapter
 data class Table(val time: String, val group: String, val auditory: Int, val name: String, val subject: String)
 
 class MainFragment : Fragment() {
-    private var fragmentNumberBinding: FragmentMainBinding? = null
 
     private val timeTable = listOf(
         Table("08.45-10.15","ЩИКО-02-20", 260, "МЮРА ЮИЛИЦИН", "ШИЗИКА"),
