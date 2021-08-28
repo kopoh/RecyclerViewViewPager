@@ -14,7 +14,7 @@ data class Table(val time: String, val group: String, val auditory: Int, val nam
 class MainFragment : Fragment() {
     private var fragmentNumberBinding: FragmentMainBinding? = null
 
-    private val nicCageMovies = listOf(
+    private val timeTable = listOf(
         Table("08.45-10.15","ЩИКО-02-20", 260, "МЮРА ЮИЛИЦИН", "ШИЗИКА"),
         Table("10.30-12.00","ЩИКО-01-20", 260, "МЮРА ЮИЛИЦИН", "ШИЗИКА"),
         Table("12.40-14.10","ЩИКО-04-21", 260, "РАКСИМ МАМАШИН", "ФИЗ-РА"),
@@ -31,7 +31,7 @@ class MainFragment : Fragment() {
         val binding = FragmentMainBinding.bind(view)
         binding.listRecyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = ListAdapter(nicCageMovies)
+            adapter = ListAdapter(timeTable)
         }
     }
 
