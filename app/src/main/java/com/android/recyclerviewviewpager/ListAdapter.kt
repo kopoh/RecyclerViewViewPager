@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.recyclerviewviewpager.R
 import com.android.recyclerviewviewpager.data.Table
 
-class ListAdapter(private val list: List<Table>)
-    : RecyclerView.Adapter<MovieViewHolder>() {
+class ListAdapter(private val list: List<Table>) : RecyclerView.Adapter<MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val inflater = LayoutInflater.from(parent.context)

@@ -8,12 +8,12 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class NumberAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int = 5
-    private val TAG = "MainActivity"
+    private val TAG = "NumberAdapter"
 
     override fun createFragment(position: Int): Fragment {
-        val fragment = MainFragment()
-        Log.e(TAG, "I'm here $fragment")
+        val fragment = TimeTableFragment()
+        Log.d(TAG, "I'm here $fragment")
         fragment.arguments = Bundle().apply {}
-        return fragment
+        return TimeTableFragment()
     }
 }

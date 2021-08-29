@@ -6,9 +6,17 @@ import android.util.Log
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.android.recyclerviewviewpager.api.UserAPI
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import java.util.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,7 +45,8 @@ class MainActivity : AppCompatActivity() {
         R.drawable.baseline_looks_5_black_48
     )
 
-    private fun createFragment():Fragment = MainFragment.newInstance()
+
+
 
     override fun onResume() {
         super.onResume()
@@ -106,5 +115,11 @@ class MainActivity : AppCompatActivity() {
             Log.e(TAG, day.toString())
 
         }.attach()
+        val userApi = UserAPI()
+        Log.d("!!!!!!!!!!!!!!!!!", "!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        val getTable = CoroutineScope(Dispatchers.IO).async {userApi.getTimeTable()}
+        CoroutineScope(Dispatchers.IO).async {Log.e(TAG,getTable.await())}
     }
+
+
 }
