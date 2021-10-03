@@ -16,9 +16,9 @@ object HttpKtor {
     public fun createHttpClient(): HttpClient {
         return HttpClient() {
             defaultRequest { // this: HttpRequestBuilder ->
-                host = "192.168.1.54"
+                host = "194.58.90.60"
 
-                port = 23567
+                //port =
 
                 install(JsonFeature) {
                     serializer = KotlinxSerializer()

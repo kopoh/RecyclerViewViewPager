@@ -1,32 +1,25 @@
 package com.android.recyclerviewviewpager
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.annotation.LayoutRes
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
-import com.android.recyclerviewviewpager.api.UserAPI
+import com.android.recyclerviewviewpager.data.GroupTable
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.gson.*
 import java.util.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-
 
 class MainActivity : AppCompatActivity() {
 
-    private var badge_position: Int = 3
+    private var badgePosition: Int = 3
     private val TAG = "MainActivity"
     private val layoutResId: Int
         @LayoutRes
         get() = R.layout.activity_main
 
-    private lateinit var adapter: NumberAdapter
+    private lateinit var adapter: TimeTableAdapter
     private lateinit var viewPager: ViewPager2
     private lateinit var tabLayout: TabLayout
 
@@ -45,9 +38,6 @@ class MainActivity : AppCompatActivity() {
         R.drawable.baseline_looks_5_black_48
     )
 
-
-
-
     override fun onResume() {
         super.onResume()
         val calendar: Calendar = Calendar.getInstance()
@@ -60,31 +50,37 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(layoutResId)
-
-        adapter = NumberAdapter(this)
+        adapter = TimeTableAdapter(this)
         viewPager = findViewById(R.id.pager)
+        //refreshPager = findViewById(R.id.swipe)
         viewPager.adapter = adapter
-        val fm = supportFragmentManager
-        var fragment = fm.findFragmentById(R.id.pager)
 
-        // ensures fragments already created will not be created
-        if (fragment == null) {
-            //fragment = createFragment()
-            // create and commit a fragment transaction
-            //fm.beginTransaction()
-                //.add(R.id.list_recycler_view, fragment)
-                //.commit()
-        }
+        /*refreshPager.setOnRefreshListener {
+            // Initialize a new Runnable
+            runnable = Runnable {
+
+                val userApi = UserAPI()
+                val getTable = CoroutineScope(Dispatchers.IO).async {userApi.getTimeTable()}
+                CoroutineScope(Dispatchers.IO).async {Log.e(TAG,getTable.await())}
+
+                // Hide swipe to refresh icon animation
+                refreshPager.isRefreshing = false
+            }
+
+            // Execute the task after specified time
+            handler.postDelayed(
+                runnable, 3000.toLong()
+            )
+        }*/
 
         tabLayout = findViewById(R.id.tab_layout)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabNames[position]
             tab.setIcon(tabNumbers[position])
 
-            if (position == badge_position) {
-                val badge = tab.getOrCreateBadge()
+            if (position == badgePosition) {
+                val badge = tab.orCreateBadge
                 badge.number = 1
                 //tab1.removeBadge()
             }
@@ -92,7 +88,7 @@ class MainActivity : AppCompatActivity() {
             tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab1: TabLayout.Tab?) {
                     // Handle tab select
-                    if(position == badge_position){
+                    if (position == badgePosition) {
                         tab1?.removeBadge()
                     }
                 }
@@ -106,6 +102,9 @@ class MainActivity : AppCompatActivity() {
                 }
             })
 
+            val gson = Gson()
+            //val topic = gson.fromJson(, DayTable::class.java)
+            val ggroupTable = GroupTable()
             val calendar: Calendar = Calendar.getInstance()
             val day: Int = calendar.get(Calendar.DAY_OF_WEEK)
             if (day >= 6) {
@@ -113,13 +112,8 @@ class MainActivity : AppCompatActivity() {
             } else
                 viewPager.currentItem = day - 2
             Log.e(TAG, day.toString())
-
+            Log.e(TAG, gson.toJson(ggroupTable))
         }.attach()
-        val userApi = UserAPI()
-        Log.d("!!!!!!!!!!!!!!!!!", "!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        val getTable = CoroutineScope(Dispatchers.IO).async {userApi.getTimeTable()}
-        CoroutineScope(Dispatchers.IO).async {Log.e(TAG,getTable.await())}
+
     }
-
-
 }

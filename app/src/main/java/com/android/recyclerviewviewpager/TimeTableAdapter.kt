@@ -6,9 +6,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class NumberAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
+class TimeTableAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int = 5
-    private val TAG = "NumberAdapter"
+    private val TAG = "TimeTableAdapter"
 
     override fun createFragment(position: Int): Fragment {
         val fragment = TimeTableFragment()

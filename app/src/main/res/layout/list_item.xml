@@ -30,20 +30,22 @@
                 android:id="@+id/list_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="0dp"
+                android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
                 android:rotation="0"
                 android:text="@string/time"
                 android:textSize="24sp"
                 android:typeface="normal"
                 android:visibility="visible"
-                app:fontFamily="sans-serif-black" />
+                app:fontFamily="sans-serif-black"
+                tools:ignore="TextContrastCheck" />
 
             <TextView
                 android:id="@+id/list_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/title"
+                tools:ignore="TextContrastCheck"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -51,19 +53,22 @@
                 android:id="@+id/list_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/name" />
+                android:text="@string/name"
+                tools:ignore="TextContrastCheck" />
 
             <TextView
                 android:id="@+id/list_subject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/subject" />
+                android:text="@string/subject"
+                tools:ignore="TextContrastCheck" />
 
             <TextView
                 android:id="@+id/list_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/description"
+                tools:ignore="TextContrastCheck"
                 android:textSize="27sp"
                 android:typeface="normal" />
 

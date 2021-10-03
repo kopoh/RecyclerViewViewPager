@@ -9,13 +9,12 @@ class UserAPI() {
     private val client = HttpKtor.createHttpClient()
 
     suspend fun getTimeTable(): String {
-        return client.post<String> {
+        return client.get<String> {
             url {
                 encodedPath = "/${c.TABLE}"
             }
         }
     }
-
 
     suspend fun createDevice2( device: String): String  {
         return client.post<String> {

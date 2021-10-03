@@ -1,28 +1,27 @@
-package info.android.viewpager2app
+package com.android.recyclerviewviewpager
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.android.recyclerviewviewpager.R
-import com.android.recyclerviewviewpager.data.Table
+import com.android.recyclerviewviewpager.data.GroupTable
 
-class ListAdapter(private val list: List<Table>) : RecyclerView.Adapter<MovieViewHolder>() {
+class ListAdapter(private val list: List<GroupTable>) : RecyclerView.Adapter<TableViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TableViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return MovieViewHolder(inflater, parent)
+        return TableViewHolder(inflater, parent)
     }
 
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val table: Table = list[position]
+    override fun onBindViewHolder(holder: TableViewHolder, position: Int) {
+        val table: GroupTable = list[position]
         holder.bind(table)
     }
 
     override fun getItemCount(): Int = list.size
 }
 
-class MovieViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
+class TableViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.list_item, parent, false)) {
     private var mTimeView: TextView? = null
     private var mGroupView: TextView? = null
@@ -38,11 +37,11 @@ class MovieViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         mAuditoryView = itemView.findViewById(R.id.list_description)
     }
 
-    fun bind(table: Table) {
-        mTimeView?.text = table.time
-        mGroupView?.text = table.group
-        mNameView?.text = table.name
-        mSubjectView?.text = table.subject
-        mAuditoryView?.text = table.auditory.toString()
+    fun bind(table: GroupTable, /*int: raspInt, int: dayArrInt*/) {
+        mTimeView?.text = table.raspisanie[0].dayArray[0].time
+        mGroupView?.text = table.raspisanie[0].dayArray[0].group
+        mNameView?.text = table.raspisanie[0].dayArray[0].teacherName
+        mSubjectView?.text = table.raspisanie[0].dayArray[0].subject
+        mAuditoryView?.text = table.raspisanie[0].dayArray[0].room
     }
 }

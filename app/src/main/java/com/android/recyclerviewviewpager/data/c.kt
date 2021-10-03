@@ -11,7 +11,7 @@ object c {
     val SAVE_F_TOKEN = "user/savetoken/" // сохранить Firabase token пользователя
     val REGISTER_WORKER = "service/worker" // регистрация работника
 
-    val TABLE = "table" // получить расписание
+    val TABLE = "/asd" // получить расписание
     val GET_ALL_DEVICE_IN_SERVICE = "service/device/get" // добавление устройства
 
 
