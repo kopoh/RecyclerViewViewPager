@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.recyclerviewviewpager.api.UserAPI
 import com.android.recyclerviewviewpager.data.DayTable
 import com.android.recyclerviewviewpager.data.GroupTable
+import com.android.recyclerviewviewpager.data.TimeTable
 import com.android.recyclerviewviewpager.databinding.TimetableFragmentBinding
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
@@ -25,10 +26,15 @@ class TimeTableFragment : Fragment() {
 
 
     private var timeTable = listOf(
-        GroupTable(1, "SHIKO-02-20"),
-        GroupTable(1, "SHIKO-02-20")
+        GroupTable(1, "SHIKO-02-20", arrayListOf(DayTable(1, arrayListOf(TimeTable(1, "08.45-10.15", "ХУКО-021-20", "Фика Турицин", "ШИЗИКА", "260"))),DayTable(2, arrayListOf(TimeTable(2, "10.30-12.00", "ХУКО-02-20", "Фика Турицин", "ШИЗИКА", "260"))))),
+        GroupTable(1, "SHIKO-02-20", arrayListOf(DayTable(2, arrayListOf(TimeTable(1, "08.45-dfkfjdf10.15", "ХУКО-021-20", "Фика Турицин", "ШИЗИКА", "260"))),DayTable(2, arrayListOf(TimeTable(2, "10.30-12.00", "ХУКО-02-20", "Фика Турицин", "ШИЗИКА", "260"))))),
+        GroupTable(1, "SHIKO-02-20", arrayListOf(DayTable(3, arrayListOf(TimeTable(1, "08.45-10.15", "ХУКО-021-20", "Фика Турицин", "ШИЗИКА", "260"))),DayTable(2, arrayListOf(TimeTable(2, "10.30-12.00", "ХУКО-02-20", "Фика Турицин", "ШИЗИКА", "260"))))),
+        GroupTable(1, "SHIKO-02-20", arrayListOf(DayTable(4, arrayListOf(TimeTable(1, "08.45-10.15", "ХУКО-021-20", "Фика Турицин", "ШИЗИКА", "260"))),DayTable(2, arrayListOf(TimeTable(2, "10.30-12.00", "ХУКО-02-20", "Фика Турицин", "ШИЗИКА", "260"))))),
+        GroupTable(1, "SHIKO-02-20", arrayListOf(DayTable(5, arrayListOf(TimeTable(1, "08.45-10.15", "ХУКО-021-20", "Фика Турицин", "ШИЗИКА", "260"))),DayTable(2, arrayListOf(TimeTable(2, "10.30-12.00", "ХУКО-02-20", "Фика Турицин", "ШИЗИКА", "260")))))
+//GroupTable(1,"111")
     )
-    /*private var timeTable = listOf(
+
+                            /*private var timeTable = listOf(
         DayTable(1, 1, "08.45-10.15", "ХУКО-02-20", "Фика Турицин", "ШИЗИКА", "260"),
         DayTable(1, 2, "10.30-12.00", "ХИКО-01-20", "Дора Раицин", "ШИЗИКА", "260"),
         DayTable(1, 3, "12.40-14.10", "КОКО-04-21", "РАКСИМ МАМАШИН", "ФИЗ-РА", "260"),
@@ -59,17 +65,11 @@ class TimeTableFragment : Fragment() {
 
                 Log.d(TAG, "Я ЗДЕСЬЬЬЬЬ$dataTimeTable + $json")
 
-                /*binding.listRecyclerView.apply {
+                binding.listRecyclerView.apply {
                     layoutManager = LinearLayoutManager(activity)
-                    /*var timeTable1 = listOf(
-                        dataTimeTable,
-                        dataTimeTable,
-                        dataTimeTable,
-                        dataTimeTable,
-                        dataTimeTable
-                    )*/
-                    adapter = ListAdapter(timeTable1)
-                }*/
+
+                    adapter = ListAdapter(timeTable)
+                }
 
                 // reset the SwipeRefreshLayout (stop the loading spinner)
                 binding.swipeRefresher.isRefreshing = false
