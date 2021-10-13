@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.android.recyclerviewviewpager.data.DayTable
 import com.android.recyclerviewviewpager.data.GroupTable
+import com.android.recyclerviewviewpager.data.TimeTable
 
-class ListAdapter(private val list: List<GroupTable>) : RecyclerView.Adapter<TableViewHolder>() {
+class ListAdapter(private val list: List<TimeTable>, private val raspInt: Int, private val dayArrInt: Int) : RecyclerView.Adapter<TableViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TableViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -15,10 +15,8 @@ class ListAdapter(private val list: List<GroupTable>) : RecyclerView.Adapter<Tab
     }
 
     override fun onBindViewHolder(holder: TableViewHolder, position: Int) {
-        val table: GroupTable = list[position]
-        val raspInt = 0
-        val dayArrInt = 0
-        holder.bind(table, raspInt, dayArrInt)
+        val table: TimeTable = list[position]
+        holder.bind(table)
     }
 
     override fun getItemCount(): Int = list.size
@@ -41,11 +39,11 @@ class TableViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         mAuditoryView = itemView.findViewById(R.id.list_description)
     }
 
-    fun bind(table: GroupTable, raspInt : Int, dayArrInt : Int) {
-        mTimeView?.text = table.raspisanie[raspInt].dayArray[dayArrInt].time
-        mGroupView?.text = table.raspisanie[raspInt].dayArray[dayArrInt].group
-        mNameView?.text = table.raspisanie[raspInt].dayArray[dayArrInt].teacherName
-        mSubjectView?.text = table.raspisanie[raspInt].dayArray[dayArrInt].subject
-        mAuditoryView?.text = table.raspisanie[raspInt].dayArray[dayArrInt].room
+    fun bind(table: TimeTable) {
+        mTimeView?.text = table.time
+        mGroupView?.text = table.group
+        mNameView?.text = table.teacherName
+        mSubjectView?.text = table.subject
+        mAuditoryView?.text = table.room
     }
 }

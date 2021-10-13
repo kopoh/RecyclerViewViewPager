@@ -1,7 +1,6 @@
 package com.android.recyclerviewviewpager
 
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +13,7 @@ import com.android.recyclerviewviewpager.data.GroupTable
 import com.android.recyclerviewviewpager.data.TimeTable
 import com.android.recyclerviewviewpager.databinding.TimetableFragmentBinding
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -21,26 +21,33 @@ import kotlinx.coroutines.async
 class TimeTableFragment : Fragment() {
 
     private val TAG: String = "TimeTableFragment"
-    private lateinit var handler: Handler
-    private lateinit var runnable: Runnable
 
 
     private var timeTable = listOf(
-        GroupTable(1, "SHIKO-02-20", arrayListOf(DayTable(1, arrayListOf(TimeTable(1, "08.45-10.15", "ХУКО-021-20", "Фика Турицин", "ШИЗИКА", "260"))),DayTable(2, arrayListOf(TimeTable(2, "10.30-12.00", "ХУКО-02-20", "Фика Турицин", "ШИЗИКА", "260"))))),
-        GroupTable(1, "SHIKO-02-20", arrayListOf(DayTable(2, arrayListOf(TimeTable(1, "08.45-dfkfjdf10.15", "ХУКО-021-20", "Фика Турицин", "ШИЗИКА", "260"))),DayTable(2, arrayListOf(TimeTable(2, "10.30-12.00", "ХУКО-02-20", "Фика Турицин", "ШИЗИКА", "260"))))),
-        GroupTable(1, "SHIKO-02-20", arrayListOf(DayTable(3, arrayListOf(TimeTable(1, "08.45-10.15", "ХУКО-021-20", "Фика Турицин", "ШИЗИКА", "260"))),DayTable(2, arrayListOf(TimeTable(2, "10.30-12.00", "ХУКО-02-20", "Фика Турицин", "ШИЗИКА", "260"))))),
-        GroupTable(1, "SHIKO-02-20", arrayListOf(DayTable(4, arrayListOf(TimeTable(1, "08.45-10.15", "ХУКО-021-20", "Фика Турицин", "ШИЗИКА", "260"))),DayTable(2, arrayListOf(TimeTable(2, "10.30-12.00", "ХУКО-02-20", "Фика Турицин", "ШИЗИКА", "260"))))),
-        GroupTable(1, "SHIKO-02-20", arrayListOf(DayTable(5, arrayListOf(TimeTable(1, "08.45-10.15", "ХУКО-021-20", "Фика Турицин", "ШИЗИКА", "260"))),DayTable(2, arrayListOf(TimeTable(2, "10.30-12.00", "ХУКО-02-20", "Фика Турицин", "ШИЗИКА", "260")))))
-//GroupTable(1,"111")
+        GroupTable(1, "SHIKO-02-20",
+            arrayListOf(
+            DayTable(1,
+                arrayListOf(
+                TimeTable(1, "08.45-10.15", "ХУКО-021-20", "Фика Турицин", "ШИЗИКА", "260"),
+                TimeTable(2, "10.30-12.00", "ХУКО-021-20", "Фика Турицин", "ШИЗИКА", "260"),
+                TimeTable(3, "12.40-14.10", "ХУКО-021-20", "Фика Турицин", "ШИЗИКА", "260"),
+                TimeTable(4, "14.20-15.50", "ХУКО-021-20", "Фика Турицин", "ШИЗИКА", "260")
+                )),
+            )
+        ),
     )
 
-                            /*private var timeTable = listOf(
-        DayTable(1, 1, "08.45-10.15", "ХУКО-02-20", "Фика Турицин", "ШИЗИКА", "260"),
-        DayTable(1, 2, "10.30-12.00", "ХИКО-01-20", "Дора Раицин", "ШИЗИКА", "260"),
-        DayTable(1, 3, "12.40-14.10", "КОКО-04-21", "РАКСИМ МАМАШИН", "ФИЗ-РА", "260"),
-        DayTable(1, 4, "14.20-15.50", "САКО-01-20", "Жора Полицин", "ШИЗИКА", "260"),
-        DayTable(1, 5, "очень поздно", "нет группы, только Автоботы", "все", "собрание у нас дура", "260")
-    )*/
+    val JSONTimetable = mutableListOf(
+        TimeTable()
+    )
+
+    private var timeTable1 = listOf(
+        TimeTable(1, "08.45-10.15", "ХУКО-021-20", "Фика Турицин", "ШИЗИКА", "260"),
+        TimeTable(2, "10.30-12.00", "ХИКО-01-20", "Дора Раицин", "ШИЗИКА", "260"),
+        TimeTable(3, "12.40-14.10", "КОКО-04-21", "РАКСИМ МАМАШИН", "ФИЗ-РА", "260"),
+        TimeTable(4, "14.20-15.50", "САКО-01-20", "Жора Полицин", "ШИЗИКА", "260"),
+        TimeTable(5, "очень поздно", "нет группы, только Автоботы", "все", "собрание у нас дура", "260")
+    )
 
 
     override fun onCreateView(
@@ -59,18 +66,47 @@ class TimeTableFragment : Fragment() {
             val userApi = UserAPI()
             val getTable = CoroutineScope(Dispatchers.IO).async { userApi.getTimeTable() }
 
-            CoroutineScope(Dispatchers.IO).async { // refresh your list contents somehow
-                val json = getTable.await()
-                val dataTimeTable = gson.fromJson(json, DayTable::class.java)
+            binding.listRecyclerView.apply {
+                val jsonString = gson.toJson(timeTable)    // make JSON from timetable in that class
+                val sType = object : TypeToken<List<GroupTable>>() {}.type  //type of structure in our JSON
+                val dataTimeTable = gson.fromJson<List<GroupTable>>(jsonString, sType)  //our JSON to something normal
 
-                Log.d(TAG, "Я ЗДЕСЬЬЬЬЬ$dataTimeTable + $json")
+                Log.e(TAG, "Я ЗДЕСЬЬЬЬЬ$dataTimeTable")  //debug fun
+
+                layoutManager = LinearLayoutManager(activity)  //creates activity
+
+                JSONTimetable.clear()   //mutableList cleared :)
+
+                (0..3).forEach() { //make 4 pairs from JSON
+                    JSONTimetable.add(dataTimeTable[0].raspisanie[0].dayArray[it]) // magic numbers, it's all 0, that is first day in GroupTable I make something with this structure
+                    Log.w(TAG, "$JSONTimetable")
+                    adapter = ListAdapter(JSONTimetable, 0, 0) //magic numbers is OK? No that is ЗАГЛУШКА
+                }
+            }
+            // reset the SwipeRefreshLayout (stop the loading spinner)
+            binding.swipeRefresher.isRefreshing = false
+
+            
+            CoroutineScope(Dispatchers.IO).async { // refresh your list contents somehow
+                val json = getTable.await()  // POST or GET recive data
 
                 binding.listRecyclerView.apply {
-                    layoutManager = LinearLayoutManager(activity)
+                    val jsonString = gson.toJson(json)  //временное решение, можно обойтись и без этой строчки
+                    val sType = object : TypeToken<List<GroupTable>>() {}.type  //type of structure in our JSON
+                    val dataTimeTable = gson.fromJson<List<GroupTable>>(jsonString, sType)  //our JSON to something normal
 
-                    adapter = ListAdapter(timeTable)
+                    Log.e(TAG, "Я ЗДЕСЬЬЬЬЬ$dataTimeTable")  //debug fun
+
+                    layoutManager = LinearLayoutManager(activity)  //creates activity
+
+                    JSONTimetable.clear()   //mutableList cleared :)
+
+                    (0..3).forEach() { //make 4 pairs from JSON
+                        JSONTimetable.add(dataTimeTable[0].raspisanie[0].dayArray[it]) // magic numbers, it's all 0, that is first day in GroupTable I make something with this structure
+                        Log.w(TAG, "$JSONTimetable")
+                        adapter = ListAdapter(JSONTimetable, 0, 0) //magic numbers is OK? No that is ЗАГЛУШКА
+                    }
                 }
-
                 // reset the SwipeRefreshLayout (stop the loading spinner)
                 binding.swipeRefresher.isRefreshing = false
             }
@@ -78,7 +114,7 @@ class TimeTableFragment : Fragment() {
 
         binding.listRecyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = ListAdapter(timeTable)
+            adapter = ListAdapter(timeTable1,0,0)
         }
     }
 }
