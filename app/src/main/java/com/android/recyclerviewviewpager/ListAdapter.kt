@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.recyclerviewviewpager.data.GroupTable
 import com.android.recyclerviewviewpager.data.TimeTable
 
-class ListAdapter(private val list: List<TimeTable>, private val raspInt: Int, private val dayArrInt: Int) : RecyclerView.Adapter<TableViewHolder>() {
+class ListAdapter(private val list: List<TimeTable>) : RecyclerView.Adapter<TableViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TableViewHolder {
         val inflater = LayoutInflater.from(parent.context)

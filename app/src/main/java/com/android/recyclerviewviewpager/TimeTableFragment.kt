@@ -37,7 +37,7 @@ class TimeTableFragment : Fragment() {
         ),
     )
 
-    val JSONTimetable = mutableListOf(
+    private val JSONTimetable = mutableListOf(
         TimeTable()
     )
 
@@ -50,11 +50,8 @@ class TimeTableFragment : Fragment() {
     )
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? =
+    override fun onCreateView(inflater: LayoutInflater,
+        container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.timetable_fragment, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -80,13 +77,13 @@ class TimeTableFragment : Fragment() {
                 (0..3).forEach() { //make 4 pairs from JSON
                     JSONTimetable.add(dataTimeTable[0].raspisanie[0].dayArray[it]) // magic numbers, it's all 0, that is first day in GroupTable I make something with this structure
                     Log.w(TAG, "$JSONTimetable")
-                    adapter = ListAdapter(JSONTimetable, 0, 0) //magic numbers is OK? No that is ЗАГЛУШКА
+                    adapter = ListAdapter(JSONTimetable) //magic numbers is OK? No that is ЗАГЛУШКА
                 }
             }
             // reset the SwipeRefreshLayout (stop the loading spinner)
             binding.swipeRefresher.isRefreshing = false
 
-            
+
             CoroutineScope(Dispatchers.IO).async { // refresh your list contents somehow
                 val json = getTable.await()  // POST or GET recive data
 
@@ -104,8 +101,8 @@ class TimeTableFragment : Fragment() {
                     (0..3).forEach() { //make 4 pairs from JSON
                         JSONTimetable.add(dataTimeTable[0].raspisanie[0].dayArray[it]) // magic numbers, it's all 0, that is first day in GroupTable I make something with this structure
                         Log.w(TAG, "$JSONTimetable")
-                        adapter = ListAdapter(JSONTimetable, 0, 0) //magic numbers is OK? No that is ЗАГЛУШКА
-                    }
+                        adapter = ListAdapter(JSONTimetable) //FIXED //magic numbers is OK? No that is ЗАГЛУШКА
+                    } //make list from JSON file and recive it to the adapter
                 }
                 // reset the SwipeRefreshLayout (stop the loading spinner)
                 binding.swipeRefresher.isRefreshing = false
@@ -114,7 +111,7 @@ class TimeTableFragment : Fragment() {
 
         binding.listRecyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = ListAdapter(timeTable1,0,0)
+            adapter = ListAdapter(timeTable1) //default data on start
         }
     }
 }
