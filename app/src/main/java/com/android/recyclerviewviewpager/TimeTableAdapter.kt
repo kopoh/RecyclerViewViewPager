@@ -12,7 +12,6 @@ class TimeTableAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragme
 
     override fun createFragment(position: Int): Fragment {
         val fragment = TimeTableFragment()
-        Log.d(TAG, "I'm here $fragment")
         fragment.arguments = Bundle().apply {}
         return TimeTableFragment()
     }

@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.recyclerviewviewpager.data.GroupTable
 import com.android.recyclerviewviewpager.data.TimeTable
 
+val timeMap = mapOf(1 to "08.45-10.15", 2 to "10.30-12.00", 3 to "12.40-14.10", 4 to "14.20-15.50", 5 to "16.00-17.30", 6 to "17.40-19.10")
+
 class ListAdapter(private val list: List<TimeTable>) : RecyclerView.Adapter<TableViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TableViewHolder {
@@ -40,7 +42,7 @@ class TableViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     }
 
     fun bind(table: TimeTable) {
-        mTimeView?.text = table.time
+        mTimeView?.text = timeMap[table.timeId]
         mGroupView?.text = table.group
         mNameView?.text = table.teacherName
         mSubjectView?.text = table.subject

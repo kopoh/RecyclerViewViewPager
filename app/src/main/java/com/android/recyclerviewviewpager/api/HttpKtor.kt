@@ -17,10 +17,10 @@ object HttpKtor {
     public fun createHttpClient(): HttpClient {
         return HttpClient() {
             defaultRequest { // this: HttpRequestBuilder ->
-                host = "127.0.0.1"
+                host = "192.168.1.33" //"127.0.0.1"
                 //host = "194.58.90.60"
-
-                port = 5000
+                //192.168.1.33:8100
+                port = 8100 //5000
 
                 install(JsonFeature) {
                     serializer = KotlinxSerializer()

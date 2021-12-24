@@ -2,28 +2,38 @@ package com.android.recyclerviewviewpager.api
 
 import com.android.recyclerviewviewpager.data.GroupTable
 import com.android.recyclerviewviewpager.data.c
+import com.google.gson.Gson
 import io.ktor.client.request.*
 //import kotlinx.serialization.json.Json
+val gson = Gson()
 
 class UserAPI() {
     private val client = HttpKtor.createHttpClient()
 
-    /*suspend fun getTimeTable(): String {
+    suspend fun getTimeTable(): String {
         return client.get<String> {
             url {
                 encodedPath = "/${c.TABLE}"
             }
         }
-    }*/
+    }
 
-    suspend fun getTimeTable(): String  {
+    suspend fun postTimeTable(): String  {
         return client.post<String> {
             url {
-                encodedPath = "/${c.TABLE}"
-                body = GroupTable(1)
+                encodedPath = "/${c.TABLEP}"
+                parameters.append("param", "Tumanov")
+                body = gson.toJson(GroupTable())
+            }
+        }
+    /*return client.post {
+            url {
+                encodedPath = "/${c.TABLEP}"
+
+                body = gson.toJson(GroupTable())
             //parameters.append("rasp", "1")
             //parameters.append("param", Json.encodeToString(device))
             }
-        }
+        }*/
     }
 }

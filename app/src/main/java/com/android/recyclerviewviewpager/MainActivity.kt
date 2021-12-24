@@ -53,7 +53,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(layoutResId)
         adapter = TimeTableAdapter(this)
         viewPager = findViewById(R.id.pager)
-        //refreshPager = findViewById(R.id.swipe)
         viewPager.adapter = adapter
 
         /*refreshPager.setOnRefreshListener {
@@ -73,6 +72,8 @@ class MainActivity : AppCompatActivity() {
                 runnable, 3000.toLong()
             )
         }*/
+
+
 
         tabLayout = findViewById(R.id.tab_layout)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
@@ -102,9 +103,6 @@ class MainActivity : AppCompatActivity() {
                 }
             })
 
-            val gson = Gson()
-            //val topic = gson.fromJson(, DayTable::class.java)
-            val ggroupTable = GroupTable()
             val calendar: Calendar = Calendar.getInstance()
             val day: Int = calendar.get(Calendar.DAY_OF_WEEK)
             if (day >= 6) {
@@ -112,7 +110,6 @@ class MainActivity : AppCompatActivity() {
             } else
                 viewPager.currentItem = day - 2
             Log.e(TAG, day.toString())
-            Log.e(TAG, gson.toJson(ggroupTable))
         }.attach()
 
     }
