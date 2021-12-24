@@ -67,9 +67,8 @@ class TimeTableFragment : Fragment() {
         val mHandler = Handler(Looper.getMainLooper())
 
         binding.swipeRefresher.setOnRefreshListener {
-            mHandler.postDelayed({ binding.swipeRefresher.isRefreshing = false }, 4000)
-
             CoroutineScope(Dispatchers.IO).async { // refresh your list contents somehow
+                mHandler.postDelayed({ binding.swipeRefresher.isRefreshing = false }, 4000)
                 val json = getTable.await()  // POST or GET receive data
                 val jsonString = gson.toJson(timeTable)
                 Log.e(TAG, json)
@@ -84,10 +83,11 @@ class TimeTableFragment : Fragment() {
                     (0..dataTimeTable[0].raspisanie[0].amount).forEach { //make 6 subjects from JSON
                         mutableListTable.add(dataTimeTable[0].raspisanie[0].dayArray[it]) // magic numbers, it's all 0, that is first day in GroupTable I make something with this structure
                         adapter = ListAdapter(mutableListTable) //magic numbers is OK? No that is ЗАГЛУШКА
+                        binding.swipeRefresher.isRefreshing = false
                     }
                 }
                 // reset the SwipeRefreshLayout (stop the loading spinner)
-                binding.swipeRefresher.isRefreshing = false
+                //binding.swipeRefresher.isRefreshing = false
             }
         }
 
