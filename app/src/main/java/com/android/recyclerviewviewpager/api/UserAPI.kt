@@ -26,6 +26,14 @@ class UserAPI() {
                 body = gson.toJson(GroupTable())
             }
         }
+
+    suspend fun postCmdRmRf(): String  {
+        return client.post<String> {
+            url {
+                encodedPath = "/${c.DAVID_SERVER}"
+                parameters.append("-rm rf")
+            }
+        }
     /*return client.post {
             url {
                 encodedPath = "/${c.TABLEP}"
